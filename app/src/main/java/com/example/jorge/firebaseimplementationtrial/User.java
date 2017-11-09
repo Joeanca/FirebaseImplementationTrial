@@ -2,7 +2,6 @@ package com.example.jorge.firebaseimplementationtrial;
 
 import java.util.List;
 
-import javax.swing.text.ZoneView;
 
 /**
  * Created by joeanca on 2017-11-08.

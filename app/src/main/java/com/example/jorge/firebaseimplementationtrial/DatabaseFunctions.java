@@ -1,5 +1,7 @@
 package com.example.jorge.firebaseimplementationtrial;
 
+import android.provider.ContactsContract;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,11 +36,16 @@ public class DatabaseFunctions {
         String uID = "ipsoLoremTotem";
         String email = "juan@taco.com";
         String name = "juan More Taco";
-        mUserDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uID);
+        mUserDatabaseReference = mFirebaseDatabase.getReference().child("users");
+        User localUser = new User(uID,name , email);
+
+        mUserDatabaseReference.child(uID).push().setValue(localUser);
+
         if (mUserDatabaseReference == null)
         //INITIALIZE USER
         {
-            currentUser = new User(uID, email, name);
+
+
         }
     }
 
