@@ -12,15 +12,20 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    DatabaseFunctions dbFN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DatabaseFunctions dbFN = new DatabaseFunctions();
+         dbFN = new DatabaseFunctions();
         User localUser = dbFN.StartDB();
 
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbFN.removeListener();
     }
 }

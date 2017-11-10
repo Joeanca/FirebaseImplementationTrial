@@ -24,8 +24,8 @@ public class DatabaseFunctions {
     private DatabaseReference mUserDatabaseReference;
 
     // A CHILD LISTENER FOR THE
-    private ChildEventListener mChildEventListener;
-
+    ChildEventListener mChildEventListener;
+    ValueEventListener listener;
     // LOCAL USER
     User currentUser;
 
@@ -36,7 +36,7 @@ public class DatabaseFunctions {
         mUserDatabaseReference = mFirebaseDatabase.getReference().child("users");
 
         // TODO GET INFO FROM Firbase UI GUID, EMAIL, NAME
-        uID = "ramon";
+        uID = "complete";
         email = "some@tacos.com";
         name = "myname";
 
@@ -47,7 +47,7 @@ public class DatabaseFunctions {
     private void retrieveUserFromDatabase(final DatabaseReference mUserDatabaseReference) {
 
         Log.d("mUserReference", "retrieveUserFromDatabase: " +mUserDatabaseReference);
-        mUserDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        ValueEventListener listener  = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild(uID)){
@@ -62,7 +62,8 @@ public class DatabaseFunctions {
             public void onCancelled(DatabaseError databaseError) {
                 //TODO "something went wrong" please retry the last thing you were trying to do. If the problem persist call 1-800-OHH-WELL
             }
-        });
+        };
+         mUserDatabaseReference.addValueEventListener(listener);
     }
 
     private void getFirebaseUICredentials() {
@@ -90,6 +91,12 @@ public class DatabaseFunctions {
             currentUser.setDeviceSerial("a1b2c3d4e5");
             //Log.e("currentUser", "StartDB: " + mUserDatabaseReference.getKey());
 
+    }
+    public void removeListener(){
+        mUserDatabaseReference.removeEventListener(listener);
+    }
+    public void attachListener(){
+        mUserDatabaseReference.addValueEventListener(listener);
     }
 
     private void StartZones(DatabaseReference userReference){
