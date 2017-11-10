@@ -29,14 +29,16 @@ public class DatabaseFunctions {
     // LOCAL USER
     User currentUser;
 
-    String uID;
+    String uID, email, name;
 
     public User StartDB(){
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUserDatabaseReference = mFirebaseDatabase.getReference().child("users");
 
-        // TODO GET INFO FROM Firbase UI GUID
-        uID = "paco";
+        // TODO GET INFO FROM Firbase UI GUID, EMAIL, NAME
+        uID = "ramon";
+        email = "some@tacos.com";
+        name = "myname";
 
         retrieveUserFromDatabase(mUserDatabaseReference);
         return currentUser;
@@ -64,8 +66,7 @@ public class DatabaseFunctions {
     }
 
     private void getFirebaseUICredentials() {
-        String email = "some@tacos.com";
-        String name = "myname";
+
 //        Log.e("zecheck", "StartDB: I am in ze if");
 //            //INITIALIZE USER
 //            final List<String> scheduleList = new ArrayList<String>() {
@@ -86,6 +87,7 @@ public class DatabaseFunctions {
             currentUser.setZoneList( new ArrayList<String>());
             currentUser.setEmail(email);
             currentUser.setName(name);
+            currentUser.setDeviceSerial("a1b2c3d4e5");
             //Log.e("currentUser", "StartDB: " + mUserDatabaseReference.getKey());
 
     }

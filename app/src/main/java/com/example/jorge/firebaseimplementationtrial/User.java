@@ -14,11 +14,15 @@ public class User {
     private List<String> scheduleList = new ArrayList<>();
     private List<String> zoneList = new ArrayList<>();
 
+
+    private String deviceSerial;
+
     public User(){
          String name;
          String email;
          List<Schedule> scheduleList = new ArrayList<>();
          List<Zone> zoneList = new ArrayList<>();
+         String deviceSerial;
     }
 
     public User (String name, String email, List<String> scheduleList, List<String> zoneList){
@@ -60,5 +64,10 @@ public class User {
     public List<String> getZoneList() {return zoneList;}
 
     public void setZoneList(List<String> zoneList) {this.zoneList = zoneList;}
+
+    public String getDeviceSerial() {return deviceSerial;}
+
+    public void setDeviceSerial(String deviceSerial) {this.deviceSerial = deviceSerial;}
+
 
 }
