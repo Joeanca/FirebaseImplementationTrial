@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DatabaseFunctions dbFN = new DatabaseFunctions();
-        dbFN.StartDB();
+        User localUser = dbFN.StartDB();
 
 
     }

@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FirebaseImplementationTrial.iml" filepath="$PROJECT_DIR$/FirebaseImplementationTrial.iml" />
+      <module fileurl="file://E:\MY APPS\Android_Projects\FirebaseImplementationTrial\FirebaseImplementationTrial.iml" filepath="E:\MY APPS\Android_Projects\FirebaseImplementationTrial\FirebaseImplementationTrial.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\MY APPS\Android_Projects\FirebaseImplementationTrial\app\app.iml" filepath="E:\MY APPS\Android_Projects\FirebaseImplementationTrial\app\app.iml" />
     </modules>
   </component>
 </project>

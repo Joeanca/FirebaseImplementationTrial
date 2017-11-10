@@ -1,5 +1,6 @@
 package com.example.jorge.firebaseimplementationtrial;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -8,16 +9,19 @@ import java.util.List;
  */
 
 public class User {
-    private String uID;
     private String name;
     private String email;
-    private List<Schedule> scheduleList;
-    private List<Zone> zoneList;
+    private List<String> scheduleList = new ArrayList<>();
+    private List<String> zoneList = new ArrayList<>();
 
-    public User(){}
+    public User(){
+         String name;
+         String email;
+         List<Schedule> scheduleList = new ArrayList<>();
+         List<Zone> zoneList = new ArrayList<>();
+    }
 
-    public User (String uID, String name, String email, List<Schedule> scheduleList, List<Zone> zoneList){
-        this.uID = uID;
+    public User (String name, String email, List<String> scheduleList, List<String> zoneList){
         this.email = email;
         this.name = name;
         this.zoneList = zoneList;
@@ -25,16 +29,11 @@ public class User {
 
     }
 
-    public User(String uID, String email, String name) {
-        this.uID = uID;
+    public User( String email, String name) {
         this.email = email;
         this.name = name;
-    }
-
-    public String getuID() {return uID;}
-
-    public void setuID(String uID) {
-        this.uID = uID;
+        this.zoneList = zoneList;
+        this.scheduleList = scheduleList;
     }
 
     public String getName() {
@@ -54,12 +53,12 @@ public class User {
     }
 
 
-    public List<Schedule> getScheduleList() {return scheduleList;}
+    public List<String> getScheduleList() {return scheduleList;}
 
-    public void setScheduleList(List<Schedule> scheduleList) {this.scheduleList = scheduleList;}
+    public void setScheduleList(List<String> scheduleList) {this.scheduleList = scheduleList;}
 
-    public List<Zone> getZoneList() {return zoneList;}
+    public List<String> getZoneList() {return zoneList;}
 
-    public void setZoneList(List<Zone> zoneList) {this.zoneList = zoneList;}
+    public void setZoneList(List<String> zoneList) {this.zoneList = zoneList;}
 
 }

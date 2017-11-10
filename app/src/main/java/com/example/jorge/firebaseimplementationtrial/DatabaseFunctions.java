@@ -1,6 +1,5 @@
 package com.example.jorge.firebaseimplementationtrial;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -8,7 +7,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,67 +31,70 @@ public class DatabaseFunctions {
 
     String uID;
 
-    public void StartDB(){
+    public User StartDB(){
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        // TODO get the user from firebase UI and insert it into the next line.
+        uID = "ruperto";
 
 
-        // GET USER WITH uID = Firbase UI GUID
-         uID = "ipsoLoremTotem";
-        String email = "juan@taco.com";
-        String name = "juan More Taco";
-        mUserDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uID);
+        // TODO GET INFO FROM Firbase UI GUID
 
-        currentUser = retrieveUserFromDatabase();
-        if (currentUser == null) {
-            //INITIALIZE USER
-            currentUser = new User(uID, name, email, null, null);
-            mUserDatabaseReference.setValue(currentUser);
-            //Log.d("currentUser", "StartDB: " + currentUser.toString());
+        mUserDatabaseReference = mFirebaseDatabase.getReference().child("users");
+        retrieveUserFromDatabase(mUserDatabaseReference);
+        Log.e("null???", "1st check: " + currentUser );
 
-        }
+        return currentUser;
     }
 
-    private User retrieveUserFromDatabase() {
+    private void retrieveUserFromDatabase(final DatabaseReference mUserDatabaseReference) {
 
-        DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference()
-                .child("users").child(uID);
-        currentUser = mUserReference.getClass();
-        Log.d("mUserReference", "retrieveUserFromDatabase: " +mUserReference);
-        mUserReference.addChildEventListener(new ChildEventListener() {
+        Log.d("mUserReference", "retrieveUserFromDatabase: " +mUserDatabaseReference);
+        mUserDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-
-                    Log.d("currentUser", "StartDB: " + currentUser.toString());
-
+                if (dataSnapshot.hasChild(uID)){
+                    currentUser = (User) dataSnapshot.getValue(User.class);
+                    Log.e("userName", "onDataChange: " + currentUser);
                 }
-            }
-
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                else{
+                    getFirebaseUICredentials();
+                    mUserDatabaseReference.child(uID).setValue(currentUser);
+                }
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                //TODO "something went wrong" please retry the last thing you were trying to do. If the problem persist call 1-800-OHH-WELL
             }
         });
-        return currentUser;
+    }
+
+    private void getFirebaseUICredentials() {
+        String email = "some@tacos.com";
+        String name = "myname";
+        Log.e("zecheck", "StartDB: I am in ze if");
+            //INITIALIZE USER
+            final List<String> scheduleList = new ArrayList<String>() {
+                {
+                    add("ONE");
+                    add("TWO");
+                    add("THREE");
+                    add("FOUR");
+                }};
+            List<String> zones = new ArrayList<String>() {{
+                add("ONE");
+                add("TWO");
+                add("THREE");
+                add("FOUR");
+            }};
+
+            currentUser = new User();
+            currentUser.setScheduleList(scheduleList);
+            currentUser.setZoneList(zones);
+            currentUser.setEmail(email);
+            currentUser.setName(name);
+            //Log.e("currentUser", "StartDB: " + mUserDatabaseReference.getKey());
+
     }
 
     private void StartZones(DatabaseReference userReference){

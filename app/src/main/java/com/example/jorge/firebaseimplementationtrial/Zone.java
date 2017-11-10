@@ -26,7 +26,7 @@ public class Zone {
         this.zGUID = zGUID;
         this.zName = zName;
         this.zOnOff = zOnOff;
-    }
+    }public Zone(){}
 
     public String getzGUID() {
         return zGUID;
