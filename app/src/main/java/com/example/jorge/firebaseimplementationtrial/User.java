@@ -10,10 +10,28 @@ import java.util.List;
 public class User {
     private String uID;
     private String name;
+    private String email;
+    private List<Schedule> scheduleList;
+    private List<Zone> zoneList;
 
-    public String getuID() {
-        return uID;
+    public User(){}
+
+    public User (String uID, String name, String email, List<Schedule> scheduleList, List<Zone> zoneList){
+        this.uID = uID;
+        this.email = email;
+        this.name = name;
+        this.zoneList = zoneList;
+        this.scheduleList = scheduleList;
+
     }
+
+    public User(String uID, String email, String name) {
+        this.uID = uID;
+        this.email = email;
+        this.name = name;
+    }
+
+    public String getuID() {return uID;}
 
     public void setuID(String uID) {
         this.uID = uID;
@@ -35,23 +53,13 @@ public class User {
         this.email = email;
     }
 
-    private String email;
 
-    private List<Schedule> scheduleList;
-    private List<Zone> zoneList;
+    public List<Schedule> getScheduleList() {return scheduleList;}
 
-    public User (String uID, String name, String email, List<Schedule> scheduleList, List<Zone> zoneList){
-        this.uID = uID;
-        this.email = email;
-        this.name = name;
-        this.zoneList = zoneList;
-        this.scheduleList = scheduleList;
+    public void setScheduleList(List<Schedule> scheduleList) {this.scheduleList = scheduleList;}
 
-    }
+    public List<Zone> getZoneList() {return zoneList;}
 
-    public User(String uID, String email, String name) {
-        this.uID = uID;
-        this.email = email;
-        this.name = name;
-    }
+    public void setZoneList(List<Zone> zoneList) {this.zoneList = zoneList;}
+
 }

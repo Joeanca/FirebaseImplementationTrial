@@ -1,6 +1,7 @@
 package com.example.jorge.firebaseimplementationtrial;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,26 +28,69 @@ public class DatabaseFunctions {
     // LOCAL USER
     User currentUser;
 
+    String uID;
+
     public void StartDB(){
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         // TODO get the user from firebase UI and insert it into the next line.
 
 
         // GET USER WITH uID = Firbase UI GUID
-        String uID = "ipsoLoremTotem";
+         uID = "ipsoLoremTotem";
         String email = "juan@taco.com";
         String name = "juan More Taco";
-        mUserDatabaseReference = mFirebaseDatabase.getReference().child("users");
-        User localUser = new User(uID,name , email);
+        mUserDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uID);
 
-        mUserDatabaseReference.child(uID).push().setValue(localUser);
-
-        if (mUserDatabaseReference == null)
-        //INITIALIZE USER
-        {
-
+        currentUser = retrieveUserFromDatabase();
+        if (currentUser == null) {
+            //INITIALIZE USER
+            currentUser = new User(uID, name, email, null, null);
+            mUserDatabaseReference.setValue(currentUser);
+            //Log.d("currentUser", "StartDB: " + currentUser.toString());
 
         }
+    }
+
+    private User retrieveUserFromDatabase() {
+
+        DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(uID);
+        currentUser = mUserReference.getClass();
+        Log.d("mUserReference", "retrieveUserFromDatabase: " +mUserReference);
+        mUserReference.addChildEventListener(new ChildEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+
+                    Log.d("currentUser", "StartDB: " + currentUser.toString());
+
+                }
+            }
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        return currentUser;
     }
 
     private void StartZones(DatabaseReference userReference){
