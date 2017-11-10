@@ -33,15 +33,12 @@ public class DatabaseFunctions {
 
     public User StartDB(){
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        uID = "ruperto";
-
+        mUserDatabaseReference = mFirebaseDatabase.getReference().child("users");
 
         // TODO GET INFO FROM Firbase UI GUID
+        uID = "paco";
 
-        mUserDatabaseReference = mFirebaseDatabase.getReference().child("users");
         retrieveUserFromDatabase(mUserDatabaseReference);
-        Log.e("null???", "1st check: " + currentUser );
-
         return currentUser;
     }
 
@@ -53,15 +50,12 @@ public class DatabaseFunctions {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild(uID)){
                     currentUser = (User) dataSnapshot.getValue(User.class);
-                    Log.e("userName", "onDataChange: " + currentUser);
                 }
                 else{
                     getFirebaseUICredentials();
                     mUserDatabaseReference.child(uID).setValue(currentUser);
                 }
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 //TODO "something went wrong" please retry the last thing you were trying to do. If the problem persist call 1-800-OHH-WELL
@@ -72,25 +66,24 @@ public class DatabaseFunctions {
     private void getFirebaseUICredentials() {
         String email = "some@tacos.com";
         String name = "myname";
-        Log.e("zecheck", "StartDB: I am in ze if");
-            //INITIALIZE USER
-            final List<String> scheduleList = new ArrayList<String>() {
-                {
-                    add("ONE");
-                    add("TWO");
-                    add("THREE");
-                    add("FOUR");
-                }};
-            List<String> zones = new ArrayList<String>() {{
-                add("ONE");
-                add("TWO");
-                add("THREE");
-                add("FOUR");
-            }};
-
+//        Log.e("zecheck", "StartDB: I am in ze if");
+//            //INITIALIZE USER
+//            final List<String> scheduleList = new ArrayList<String>() {
+//                {
+//                    add("ONE");
+//                    add("TWO");
+//                    add("THREE");
+//                    add("FOUR");
+//                }};
+//            List<String> zones = new ArrayList<String>() {{
+//                add("ONE");
+//                add("TWO");
+//                add("THREE");
+//                add("FOUR");
+//            }};
             currentUser = new User();
-            currentUser.setScheduleList(scheduleList);
-            currentUser.setZoneList(zones);
+            currentUser.setScheduleList( new ArrayList<String>());
+            currentUser.setZoneList( new ArrayList<String>());
             currentUser.setEmail(email);
             currentUser.setName(name);
             //Log.e("currentUser", "StartDB: " + mUserDatabaseReference.getKey());
@@ -163,10 +156,6 @@ public class DatabaseFunctions {
                 // SOME ERROR OCCURRED WHEN TRYING TO MAKE CHANGES
             }
         };
-
         mScheduleDBReference.addChildEventListener(mChildEventListener);
     }
-
-
-
 }
